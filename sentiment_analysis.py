@@ -8,12 +8,12 @@ def main():
     negative_word_ratio = []
 
     for i in range(1,6):
-        file_name = "text_data/office/" + str(i) + "starreviews.txt"
+        file_name = "text_data/instruments/" + str(i) + "starreviews.txt"
         data = gather_rating_data(file_name, positive_words, negative_words)
         positive_word_ratio.append(data[0] / (data[1] + data[0]))
         negative_word_ratio.append(data[1] / (data[1] + data[0]))
 
-    generate_graph([positive_word_ratio, negative_word_ratio], "Office Supplies")
+    generate_graph([positive_word_ratio, negative_word_ratio], "Musical Instruments")
 
 
 def read_in_list(file_name):

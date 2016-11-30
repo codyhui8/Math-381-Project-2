@@ -2,7 +2,7 @@ import data_manip
 import random
 
 def main():
-    filename = "dataset/office.json"
+    filename = "dataset/instruments.json"
     data = data_manip.fetch_data(filename)
     word_list = data_manip.generate_word_list(data)
 
@@ -50,9 +50,9 @@ def main():
     # review_generator(normalized_data_1, num_reviews, max_length, word_list, num_sentence)
 
     SENTENCE_LENGTH = 20
-    NUM_SENTENCES_PAR = 5
+    NUM_SENTENCES_PAR = 1
 
-    num_reviews = 100
+    num_reviews = 1000
     max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
     num_sentence = NUM_SENTENCES_PAR
 
