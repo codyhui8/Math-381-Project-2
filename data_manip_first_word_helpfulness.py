@@ -31,7 +31,8 @@ def generate_word_list(data):
     return sorted_word_list
 
 
-def generate_markov_chain(sentence_data, word_list, rating_values, rating, helpfulness, min_helpfulness):
+def generate_markov_chain(sentence_data, word_list, rating_values,
+                          rating, helpfulness, min_helpfulness):
     keys = list(word_list.keys())
     key_length = len(keys)
     markov_dict = {}
@@ -44,12 +45,11 @@ def generate_markov_chain(sentence_data, word_list, rating_values, rating, helpf
     first_word_keys = list(first_word_dict.keys())
     # Go through each sentence
     for i in range(0, len(sentence_data)):
-        # If rating for the sentence is the rating that we want to isolate.
-        # print(str(rating) + ": " + str(rating_values[i]))
         helpfulness_rating = 0
         if helpfulness[i][1] > 1:
             helpfulness_rating = helpfulness[i][0] / helpfulness[i][1]
-        if rating[0] == rating_values[i] and helpfulness_rating > min_helpfulness:
+        if rating[0] == rating_values[i] and \
+                        helpfulness_rating > min_helpfulness:
             text_value = sentence_data[i]
             text = clean_words(text_value)
             length_text = len(text)
@@ -76,10 +76,9 @@ def generate_markov_chain(sentence_data, word_list, rating_values, rating, helpf
         if i % 5000 == 0:
             print("Sentences Processed: " + str(i))
     first_word_dict.pop(".", None)
-    first_word_dict = OrderedDict(sorted(first_word_dict.items(), key=itemgetter(1),
+    first_word_dict = OrderedDict(sorted(first_word_dict.items(),
+                                         key=itemgetter(1),
                                          reverse=True))
-    # for i in first_word_dict.keys()[0:100]:
-    #     print(str(i) + ": " + str(first_word_dict[i]))
     print("Number of Sentences Inserted: " + str(count))
 
     first_word_dict = normalize_single({k: first_word_dict[k] for k in
@@ -88,8 +87,9 @@ def generate_markov_chain(sentence_data, word_list, rating_values, rating, helpf
     markov_dict = normalize(markov_dict, keys)
 
     for k in range(0, key_length):
-        markov_dict[keys[k]] = OrderedDict(sorted(markov_dict[keys[k]].items(),
-                                                  key=itemgetter(1), reverse=True))
+        markov_dict[keys[k]] = OrderedDict(
+            sorted(markov_dict[keys[k]].items(),
+                   key=itemgetter(1), reverse=True))
 
     return [markov_dict, first_word_dict]
 

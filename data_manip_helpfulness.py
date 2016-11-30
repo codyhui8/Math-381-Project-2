@@ -31,7 +31,8 @@ def generate_word_list(data):
     return sorted_word_list
 
 
-def generate_markov_chain(sentence_data, word_list, rating_values, rating, helpfulness, min_helpfulness):
+def generate_markov_chain(sentence_data, word_list, rating_values, rating
+                          , helpfulness, min_helpfulness):
     keys = list(word_list.keys())
     key_length = len(keys)
     markov_dict = {}
@@ -66,7 +67,8 @@ def generate_markov_chain(sentence_data, word_list, rating_values, rating, helpf
     markov_dict = normalize(markov_dict, keys)
 
     for k in range(0, key_length):
-        markov_dict[keys[k]] = OrderedDict(sorted(markov_dict[keys[k]].items(), key=itemgetter(1), reverse=True))
+        markov_dict[keys[k]] = OrderedDict(sorted(markov_dict[keys[k]].items()
+                                                  , key=itemgetter(1), reverse=True))
 
     return markov_dict
 
