@@ -2,7 +2,7 @@ import data_manip
 import random
 
 def main():
-    filename = "dataset/electronicsl.json"
+    filename = "dataset/office.json"
     data = data_manip.fetch_data(filename)
     word_list = data_manip.generate_word_list(data)
 
@@ -29,17 +29,17 @@ def main():
     # normalized_data_3 = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
     # rating = [4]
     # normalized_data_4 = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
-    rating = [5]
-    normalized_data_5 = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
-
-    SENTENCE_LENGTH = 20
-    NUM_SENTENCES_PAR = 5
-
-    num_reviews = 100
-    max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
-    num_sentence = NUM_SENTENCES_PAR
-    print("--- 5 Star Reviews ---")
-    review_generator(normalized_data_5, num_reviews, max_length, word_list, num_sentence)
+    # rating = [5]
+    # normalized_data_5 = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
+    #
+    # SENTENCE_LENGTH = 20
+    # NUM_SENTENCES_PAR = 5
+    #
+    # num_reviews = 100
+    # max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
+    # num_sentence = NUM_SENTENCES_PAR
+    # print("--- 5 Star Reviews ---")
+    # review_generator(normalized_data_5, num_reviews, max_length, word_list, num_sentence)
     # print("\n--- 4 Star Reviews ---")
     # review_generator(normalized_data_4, num_reviews, max_length, word_list, num_sentence)
     # print("\n--- 3 Star Reviews ---")
@@ -48,6 +48,21 @@ def main():
     # review_generator(normalized_data_2, num_reviews, max_length, word_list, num_sentence)
     # print("\n--- 1 Star Reviews ---")
     # review_generator(normalized_data_1, num_reviews, max_length, word_list, num_sentence)
+
+    SENTENCE_LENGTH = 20
+    NUM_SENTENCES_PAR = 5
+
+    num_reviews = 100
+    max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
+    num_sentence = NUM_SENTENCES_PAR
+
+    normalized_data = {}
+    for i in range(1, 6):
+        rating = [i]
+        normalized_data = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
+        print("--- " + str(i) + " Star Reviews ---")
+        file_name = (str(i) + "starreviews.txt")
+        review_generator(normalized_data, num_reviews, max_length, word_list, num_sentence, file_name)
 
     # ## Calculate average rating
     # mean_value = 0
@@ -66,10 +81,10 @@ def main():
     # mean_help_value = mean_help_value / len(pulled_data[2])
     # print("Mean Help Value: " + str(mean_help_value))
 
-def review_generator(data, num_reviews, max_length, word_list, num_sentence):
+def review_generator(data, num_reviews, max_length, word_list, num_sentence, file_name):
     generated_reviews = []
     should_capitalize = ["i", "i'll", "i've"]
-    text_file = open("text_data/1starreviews.txt", "w")
+    text_file = open("text_data/" + file_name, "w")
     for i in range(0, num_reviews):
         first_word = random.choice(list(word_list.keys())[0:20])
         sentence = first_word.capitalize()
