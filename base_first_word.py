@@ -4,7 +4,7 @@ from collections import OrderedDict
 from operator import itemgetter
 
 def main():
-    filename = "dataset/kitchen.json"
+    filename = "dataset/office.json"
     data = data_manip.fetch_data(filename)
     word_list = data_manip.generate_word_list(data)
 
@@ -41,13 +41,13 @@ def main():
     # normalized_first_word_3 = OrderedDict(sorted(normalized_first_word_3.items(),
     #                                              key=itemgetter(1), reverse=True))
 
-    rating = [4]
-    normalized_data_4 = data_manip.generate_markov_chain\
-        (pulled_data[0], word_list, pulled_data[1], rating)
-    normalized_first_word_4 = normalized_data_4[1]
-    normalized_data_4 = normalized_data_4[0]
-    normalized_first_word_4 = OrderedDict(sorted(normalized_first_word_4.items(),
-                                                 key=itemgetter(1), reverse=True))
+    # rating = [4]
+    # normalized_data_4 = data_manip.generate_markov_chain\
+    #     (pulled_data[0], word_list, pulled_data[1], rating)
+    # normalized_first_word_4 = normalized_data_4[1]
+    # normalized_data_4 = normalized_data_4[0]
+    # normalized_first_word_4 = OrderedDict(sorted(normalized_first_word_4.items(),
+    #                                              key=itemgetter(1), reverse=True))
 
     # rating = [5]
     # normalized_data_5 = data_manip.generate_markov_chain\
@@ -57,18 +57,18 @@ def main():
     # normalized_first_word_5 = OrderedDict(sorted(normalized_first_word_5.items(),
     #                                              key=itemgetter(1), reverse=True))
 
-    SENTENCE_LENGTH = 20
-    NUM_SENTENCES_PAR = 5
-
-    num_reviews = 100
-    max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
-    num_sentence = NUM_SENTENCES_PAR
+    # SENTENCE_LENGTH = 20
+    # NUM_SENTENCES_PAR = 5
+    #
+    # num_reviews = 100
+    # max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
+    # num_sentence = NUM_SENTENCES_PAR
     # print("--- 5 Star Reviews ---")
     # review_generator(normalized_data_5, num_reviews, max_length, word_list,
     #                  num_sentence, normalized_first_word_5)
-    print("\n--- 4 Star Reviews ---")
-    review_generator(normalized_data_4, num_reviews, max_length, word_list,
-                     num_sentence, normalized_first_word_4)
+    # print("\n--- 4 Star Reviews ---")
+    # review_generator(normalized_data_4, num_reviews, max_length, word_list,
+    #                  num_sentence, normalized_first_word_4)
     # print("\n--- 3 Star Reviews ---")
     # review_generator(normalized_data_3, num_reviews, max_length, word_list,
     #                  num_sentence, normalized_first_word_3)
@@ -79,10 +79,30 @@ def main():
     # review_generator(normalized_data_1, num_reviews, max_length, word_list,
     #                  num_sentence, normalized_first_word_1)
 
-def review_generator(data, num_reviews, max_length, word_list, num_sentence, first_word_data):
+    SENTENCE_LENGTH = 20
+    NUM_SENTENCES_PAR = 5
+
+    num_reviews = 100
+    max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
+    num_sentence = NUM_SENTENCES_PAR
+
+    normalized_data = {}
+    for i in range(1, 6):
+        rating = [i]
+        normalized_data = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
+        normalized_first_word = normalized_data[1]
+        normalized_data = normalized_data[0]
+        normalized_first_word = OrderedDict(sorted(normalized_first_word.items(),
+                                                     key=itemgetter(1), reverse=True))
+        print("--- " + str(i) + " Star Reviews ---")
+        file_name = (str(i) + "starreviews.txt")
+        review_generator(normalized_data, num_reviews, max_length, word_list, num_sentence,
+                         normalized_first_word, file_name)
+
+def review_generator(data, num_reviews, max_length, word_list, num_sentence, first_word_data, file_name):
     generated_reviews = []
     should_capitalize = ["i", "i'll", "i've"]
-    text_file = open("text_data/5starreviews.txt", "w")
+    text_file = open("text_data/" + file_name, "w")
     for i in range(0, num_reviews):
         first_word = random.choice(list(word_list.keys())[0:20])
         sentence = first_word.capitalize()
