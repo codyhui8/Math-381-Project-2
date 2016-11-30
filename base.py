@@ -2,7 +2,7 @@ import data_manip
 import random
 
 def main():
-    filename = "dataset/office.json"
+    filename = "dataset/electronicsl.json"
     data = data_manip.fetch_data(filename)
     word_list = data_manip.generate_word_list(data)
 
@@ -32,9 +32,12 @@ def main():
     rating = [5]
     normalized_data_5 = data_manip.generate_markov_chain(pulled_data[0], word_list, pulled_data[1], rating)
 
-    num_reviews = 10
-    max_length = 50
-    num_sentence = 2
+    SENTENCE_LENGTH = 20
+    NUM_SENTENCES_PAR = 5
+
+    num_reviews = 100
+    max_length = NUM_SENTENCES_PAR * SENTENCE_LENGTH
+    num_sentence = NUM_SENTENCES_PAR
     print("--- 5 Star Reviews ---")
     review_generator(normalized_data_5, num_reviews, max_length, word_list, num_sentence)
     # print("\n--- 4 Star Reviews ---")
